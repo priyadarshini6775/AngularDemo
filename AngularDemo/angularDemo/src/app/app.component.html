@@ -1,0 +1,134 @@
+<app-header></app-header>
+<button (click)="getName(myName)">getName</button><br>
+<button (click)="MyEvent('this is click event')"> clickMe </button><br>
+<input type="text" #inputBox1 (keyup)="MyEvent(inputBox1.value)"><br>
+<input type="text" #inputBox2 (keydown)="MyEvent(inputBox2.value)"><br>
+<input type="text" #inputBox3 (keyup.enter)="MyEvent(inputBox3.value)"><br>
+<input type="text" #inputBox4 (keyup.space)="MyEvent(inputBox4.value)"><br>
+<input type="text" #inputBox5 (blur)="MyEvent(inputBox5.value)"><br>
+
+<h2 style="background-color: skyblue;" (mouseover)="MyEvent('mouseover event')"> MouseOver</h2>
+
+<h2 style="background-color: aqua" (mouseleave)="MyEvent('mouseleave event')"> MouseLeave</h2>
+
+<!-- To get Text Box Values on Key Change -->
+<input type="text" (keyup)="getValue($event.target.value)"><br>
+
+<!-- To get Text Box Values on Submit -->
+<input type="text" #box>
+<button (click)="getValue(box.value)"> get Value</button> {{ boxValue }} <br>
+
+<!-- Property Binding -->
+<!-- Bind a Property with html element  -->
+<input type="text"  [value]="myName" [disabled]="myDisabled"> <br>
+<input type="text" value={{myName}} disabled={{myDisabled}}> 
+<!-- Interpolation doesnot work in property binding like disabled-->
+<button (click)="EnableBox()">Enable </button><br>
+
+
+<!--ngIF -->
+
+<h2 *ngIf="show then ifBlock else elseBlock"> </h2>
+<!--<h2 *ngIf="show=='yes' then ifBlock else elseBlock"> </h2> -->
+
+<ng-template #ifBlock> IF Block</ng-template>
+<ng-template #elseBlock> ELSE Block</ng-template>
+
+<div *ngIf="myColor=='red'">This is red block</div>
+
+<ng-template [ngIf]="myColor=='red'">
+    <h2>Red Color</h2>
+</ng-template>
+
+<ng-template [ngIf]="myColor=='green'">
+    <h2>Green Color</h2>
+</ng-template>
+
+<ng-template [ngIf]="myColor=='blue'">
+    <h2>Blue Color</h2>
+</ng-template>
+
+<!--ngswtich case example-->
+
+<div [ngSwitch]='myColor'>
+    <h2 style="color:red" *ngSwitchCase="'red'"> Red color </h2>
+    <h2 style="color:red" *ngSwitchCase="'green'"> Green color </h2>
+    <h2 style="color:red" *ngSwitchCase="'blue'"> Blue color </h2>
+    <h2  *ngSwitchDefault> Default color </h2>
+</div>
+
+
+<!--ngFor case example-->
+
+<table>
+    <tr>
+        <th>name</th>
+        <th>age</th>
+    </tr>
+    <tr *ngFor="let item of dataArray">
+        <td> {{ item.name }}</td>
+        <td> {{ item.age }} </td>
+
+    </tr>
+</table>
+
+<!--  forms demo-->
+
+<form #myForm="ngForm" (ngSubmit)="getFormValues(myForm.value)">
+    <input type="text" name="userName" placeholder="enter user name" ngModel><br><br>
+    <input type="text" name="age" placeholder="enter user age" ngModel><br><br>
+    <button>Submit</button>
+</form>
+
+<!--style binding-->
+<h3 style="color: 'green';">Style binding</h3>
+<h3 [style.color]="'green'"> Dynamic style binding</h3>
+<h3 [style.color]="myColor"> Dynamic style binding</h3>
+<h3 [style.color]="errFlag?'red':'green'"> Conditional style binding</h3>
+<button (click)="changeColor()">change color</button>
+
+<p>
+    <ngb-alert [dismissible]="false">
+      <strong>Warning!</strong> Better check yourself, you're not looking too good.
+    </ngb-alert>
+  </p>
+
+<button>Normal Button</button>
+<button mat-button>Basic</button>
+<button mat-button color="primary">Primary</button>
+<button mat-button color="accent">Accent</button>
+<button mat-button color="warn">Warn</button>
+<button mat-button disabled>Disabled</button>
+
+<!--<mat-slider max="10" min="1"></mat-slider>-->
+
+<!--passing data from parent to child-->
+
+<!--<app-child [hero]="myFav" [heroObj]="myFavObj"></app-child>-->
+<app-child [heroObj]="myFavObj"></app-child>
+
+<div *ngFor="let myFavObj of myFavObjArray">
+    <app-child [heroObj]="myFavObj" (parentFunction)="getDataFromChild($event)"></app-child>
+</div>
+
+<!-- Pipes Demo -->
+<div>
+   <h3> {{ myName | lowercase }} </h3>
+   <h3> {{ myName | uppercase }} </h3>
+   <h3> {{ myName | titlecase }} </h3>
+   <h3> {{ toDay | date}} </h3>
+   <h3> {{ toDay | date:'fullDate'}} </h3>
+   <h3> {{ myName | slice:2:6 }} </h3>
+   <h3> {{ money | currency:'USD' }} </h3>
+   <h3> {{ money | currency:'CAD' }} </h3>
+
+
+   
+
+  
+</div>
+
+
+
+<app-footer></app-footer>
+<router-outlet></router-outlet>
